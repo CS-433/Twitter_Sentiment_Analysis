@@ -1,6 +1,7 @@
-## Version 0.2
+## Version 0.3
 
 import numpy as np
+import re
 
 # Adapted from here: https://en.wikipedia.org/wiki/Wikipedia:List_of_English_contractions
 contractions = { 
@@ -191,6 +192,38 @@ def remove_end_of_line(before):
         return before[:-1]
     return before
 
+positive_emojis = r"(([<>]?[:;=8][\-o\*]?[\)\]dDpP\}@])|([\(\[dDpP\{@][\-o\*]?[:;=8][<>]?))"
+negative_emojis = r"(([<>]?[:;=8][\-o\*\']?[\(\[/\{\|\\])|([\)\]/\}\|\\][\-o\*\']?[:;=8][<>]?))"
+
+# Elaborated from: (credit http://sentiment.christopherpotts.net/code-data/happyfuntokenizing.py)
+# (
+#   (
+#     [<>]?
+#     [:;=8]
+#     [\-o\*\']?
+#     [\)\]\(\[dDpP/\:\}\{@\|\\]
+#   )|(
+#     [\)\]\(\[dDpP/\:\}\{@\|\\]
+#     [\-o\*\']?
+#     [:;=8]
+#     [<>]?
+#   )
+# )
+
+def translate_emojis(before):
+    if len(before) == 0:
+        return ""
+
+    pos = re.match(positive_emojis, before)
+    neg = re.match(negative_emojis, before)
+
+    if pos is not None:
+      return "happy"
+    elif neg is not None:
+      return "sad"
+    else:
+      return before
+
 def words_to_tags(before):
     if before == "<url>":
         return "resource"
@@ -209,6 +242,7 @@ def to_vec(lmt_wise_method):
 preproc_pipeline = [
     to_vec(remove_end_of_line), 
     to_vec(remove_hashtag), 
-    to_vec(remove_contractions), 
+    to_vec(remove_contractions),
+    to_vec(translate_emojis),
     to_vec(words_to_tags)
 ]
