@@ -1,3 +1,5 @@
+## Version 0.2
+
 import numpy as np
 
 # Adapted from here: https://en.wikipedia.org/wiki/Wikipedia:List_of_English_contractions
@@ -79,7 +81,88 @@ contractions = {
 "you'd": "you would", # "you had / you would",
 "you'll": "you will", # "you shall / you will",
 "you're": "you are",
-"you've": "you have"
+"you've": "you have",
+###################################################################
+## Also, many tweets have the same contractions without accents  ##
+###################################################################
+"aint": "be not", # "am not / are not / is not / has not / have not",
+"arent": "be not", # "are not / am not",
+"cant": "cannot",
+"cantve": "cannot have",
+"cause": "because",
+"couldve": "could have",
+"couldnt": "could not",
+"couldntve": "could not have",
+"didnt": "did not",
+"doesnt": "does not",
+"dont": "do not",
+"hadnt": "had not",
+"hadntve": "had not have",
+"hasnt": "has not",
+"havent": "have not",
+"hed": "he would", # "he had / he would",
+"hedve": "he would have",
+"hell": "he will", # "he shall / he will",
+"hes": "he is", # "he has / he is",
+"howd": "how did",
+"howdy": "how do you",
+"howdy": "how do you",
+"howll": "how will",
+"hows": "how", # "how has / how is / how does",
+"id": "i would", # "I had / I would",
+"idve": "i would have",
+"ill": "i will", # "I shall / I will",
+"im": "i am",
+"ive": "i have",
+"isnt": "is not",
+"itd": "it would", # "it had / it would",
+"itll": "it will", # "it shall / it will",
+"its": "it is", # "it has / it is",
+"lets": "let us",
+"maam": "madam",
+"mustnt": "must not",
+"neednt": "need not",
+"oclock": "of the clock",
+"oughtnt": "ought not",
+"shant": "shall not",
+"shant": "shall not",
+"shed": "she would", # "she had / she would",
+"shedve": "she would have",
+"shell": "she will", # "she shall / she will",
+"shes": "she is", # "she has / she is",
+"shouldve": "should have",
+"shouldnt": "should not",
+"thats": "that is", # "that has / that is",
+"theres": "there is", # "there has / there is",
+"theyd": "they would", # "they had / they would",
+"theyll": "they will", # "they shall / they will",
+"theyre": "they are",
+"theyve": "they have",
+"wasnt": "was not",
+"wed": "we would", # "we had / we would",
+"well": "we will",
+"were": "we are",
+"weve": "we have",
+"werent": "were not",
+"whats": "what is", # "what has / what is",
+"whenve": "when have",
+"whered": "where did",
+"wheres": "where is", # "where has / where is",
+"whereve": "where have",
+"wholl": "who will", # "who shall / who will",
+"whos": "who is", # "who has / who is",
+"whove": "who have",
+"whys": "why is", # "why has / why is",
+"whyve": "why have",
+"willve": "will have",
+"wont": "will not",
+"wouldve": "would have",
+"wouldnt": "would not",
+"yall": "you all",
+"youd": "you would", # "you had / you would",
+"youll": "you will", # "you shall / you will",
+"youre": "you are",
+"youve": "you have"
 }
 
 def process_sentence(sentence_array, purge_methods):
@@ -110,11 +193,13 @@ def remove_end_of_line(before):
 
 def words_to_tags(before):
     if before == "<url>":
-        return "[UNK]"
+        return "resource"
     elif before == "xox":
         return "kiss"
+    elif before == "...":
+        return "[UNK]"
     elif before == "<user>":
-        return "alice"
+        return "user"
     return before
 
 def to_vec(lmt_wise_method):
