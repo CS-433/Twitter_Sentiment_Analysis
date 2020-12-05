@@ -1,8 +1,21 @@
-## Version 0.3
-
 import numpy as np
-import re
+import wordsegment
+from wordsegment import load, segment
+load()
+from spellchecker import SpellChecker
+spell = SpellChecker()
 
+import nltk
+from nltk.corpus import wordnet
+nltk.download('wordnet')
+from nltk.corpus import stopwords
+nltk.download('stopwords')
+stop_words = set(stopwords.words('english')) 
+
+from nltk.stem import PorterStemmer
+from nltk.stem import WordNetLemmatizer
+ps=PorterStemmer()
+wordnet_lemmatizer = WordNetLemmatizer()
 # Adapted from here: https://en.wikipedia.org/wiki/Wikipedia:List_of_English_contractions
 contractions = { 
 "ain't": "be not", # "am not / are not / is not / has not / have not",
@@ -179,6 +192,16 @@ def remove_hashtag(before):
         return before[1:]
     return before
 
+
+def split_hashtag(before):
+    if len(before) == 0:
+        return ""
+    
+    if before[0] == "#":
+        return ' '.join(segment(before))
+    return before
+    
+
 def remove_contractions(before):
     if before in contractions:
         return contractions[before]
@@ -191,6 +214,40 @@ def remove_end_of_line(before):
     if before[-1] == '\n':
         return before[:-1]
     return before
+
+def words_to_tags(before):
+    if before == "<url>":
+        return "[UNK]"
+    elif before == "xox":
+        return "kiss"
+    elif before == "<user>":
+        return "alice"
+    return before
+
+
+def spell_correction(before):
+    return spell.correction(before) 
+
+def truncate_small_words(before , minimum_size):
+    if len(before)<minimum_size:
+        return ""
+    return before
+
+def remove_digits(before):
+    if before.isdigit() :
+        return ""
+    return before
+
+def remove_stopwords(before):
+    if before in stop_words:
+        return ""
+    return before
+    
+def stemming(before):
+    return ps.stem(before)
+
+def lemmatize(before):
+    return wordnet_lemmatizer.lemmatize(before)
 
 positive_emojis = r"(([<>]?[:;=8][\-o\*]?[\)\]dDpP\}@])|([\(\[dDpP\{@][\-o\*]?[:;=8][<>]?))"
 negative_emojis = r"(([<>]?[:;=8][\-o\*\']?[\(\[/\{\|\\])|([\)\]/\}\|\\][\-o\*\']?[:;=8][<>]?))"
@@ -218,31 +275,22 @@ def translate_emojis(before):
     neg = re.match(negative_emojis, before)
 
     if pos is not None:
-      return "happy"
+        return "happy"
     elif neg is not None:
-      return "sad"
+        return "sad"
     else:
-      return before
-
-def words_to_tags(before):
-    if before == "<url>":
-        return "resource"
-    elif before == "xox":
-        return "kiss"
-    elif before == "...":
-        return "[UNK]"
-    elif before == "<user>":
-        return "user"
-    return before
+        return before
 
 def to_vec(lmt_wise_method):
     return np.vectorize(lmt_wise_method)
 
 # Standard pipeline
 preproc_pipeline = [
-    to_vec(remove_end_of_line), 
-    to_vec(remove_hashtag), 
-    to_vec(remove_contractions),
-    to_vec(translate_emojis),
-    to_vec(words_to_tags)
+    to_vec(remove_end_of_line),
+    to_vec(split_hashtag), 
+    to_vec(remove_contractions), 
+    to_vec(words_to_tags),
+    #to_vec(remove_digits),
+    to_vec(remove_stopwords),
+    to_vec(lemmatize) 
 ]
