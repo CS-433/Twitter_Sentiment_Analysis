@@ -288,6 +288,10 @@ def remove_repeats(text):
     """ Replace repeated letters by single letter. """
     return re.sub(r'([a-z])\1+', r'\1', text)
 
+def detect_laugh(text):
+    """ Replace all variants of hahaha and lol by [LAUGH] """
+    return re.sub(r'\b(a*ha+h[ha]*|o?l+o+l+[ol]*)\b', '[LAUGH]', text)
+
 def to_vec(lmt_wise_method):
     return np.vectorize(lmt_wise_method)
 
