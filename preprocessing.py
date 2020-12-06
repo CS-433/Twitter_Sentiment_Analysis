@@ -16,6 +16,9 @@ from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 ps=PorterStemmer()
 wordnet_lemmatizer = WordNetLemmatizer()
+
+import re
+
 # Adapted from here: https://en.wikipedia.org/wiki/Wikipedia:List_of_English_contractions
 contractions = { 
 "ain't": "be not", # "am not / are not / is not / has not / have not",
@@ -280,6 +283,10 @@ def translate_emojis(before):
         return "sad"
     else:
         return before
+    
+def remove_repeats(text):
+    """ Replace repeated letters by single letter. """
+    return re.sub(r'([a-z])\1+', r'\1', text)
 
 def to_vec(lmt_wise_method):
     return np.vectorize(lmt_wise_method)
