@@ -68,7 +68,25 @@ def write_labeled(filename, tweets, y):
     
     with open(filename, 'w', encoding = 'utf-8') as f:
         for i, tweet in enumerate(tweets):
-            f.write('__label__{} '.format(y[i]) + line)
+            f.write('__label__{} '.format(y[i]) + tweet)
+            
+def write_unlabeled(filename, tweets):
+    """ Write a labeled dataset to text file.  
+    
+    Parameters
+    ----------
+    filename: string
+        relative path to save
+    tweets: 1D numpy array of strings
+        tweets to save
+    y: 1D numpy array of integers (0 or 1)
+        corresponding labels 
+    """
+    
+    
+    with open(filename, 'w', encoding = 'utf-8') as f:
+        for i, tweet in enumerate(tweets):
+            f.write(tweet)
         
         
 def split_dataset(fraction, tweets, y):
