@@ -1,9 +1,9 @@
+# version 0.5
+
 import numpy as np
 import wordsegment
 from wordsegment import load, segment
 load()
-from spellchecker import SpellChecker
-spell = SpellChecker()
 
 import nltk
 from nltk.corpus import wordnet
@@ -20,7 +20,7 @@ wordnet_lemmatizer = WordNetLemmatizer()
 import re
 
 # Adapted from here: https://en.wikipedia.org/wiki/Wikipedia:List_of_English_contractions
-contractions = { 
+contractions = {
 "ain't": "be not", # "am not / are not / is not / has not / have not",
 "aren't": "be not", # "are not / am not",
 "can't": "cannot",
@@ -182,6 +182,68 @@ contractions = {
 "youve": "you have"
 }
 
+### TODO: Give number of appearences
+
+# Taken from 'https://www.really-learn-english.com/informal-contractions-american-english.html'
+informal_contractions = {
+# Shortened pronouns
+"u": "you",
+"ur": "your", # 14K occurrences
+
+##################################
+#### Other informal contractions
+##################################
+# With 'you'
+"dontcha": "do not you",
+"didntcha": "did not you",
+"wontcha": "will not you",
+"whatcha or watcha": "what are you",
+"gotcha": "got you",
+"betcha": "bet you",
+
+# With 'have'
+"shoulda": "should have",
+"coulda": "could have",
+"woulda": "would have",
+"mighta": "might have",
+"musta": "must have",
+"couldna": "could not have",
+"shouldna": "should not have",
+"wouldna": "would not have",
+"she'da": "she would have",
+"he'da": "he would have",
+"I'da": "I would have",
+"they'da": "They would have",
+"you'da": "You would have",
+
+# With 'of'
+"kinda": "kind of",
+"outta": "out of",
+"cuppa": "cup of",
+"sorta": "sort of",
+"lotta": "lot of",
+
+# With 'to'
+"gotta": "got to",
+"gonna": "going to",
+"needa": "need to",
+"wanna": "want to",
+"hafta": "have to",
+"hasta": "has to",
+"oughta": "ought to",
+"supposeta": "supposed to",
+"useta": "used to",
+
+# Others
+"gimme": "give me",
+"lemme": "let me",
+"tellem": "tell them",
+"dunno": "do not know",
+"gotta": "got a",
+"c'mon": "come on",
+"s'more": "some more"
+}
+
 def process_sentence(sentence_array, purge_methods):
     for method in purge_methods:
         sentence_array = method(sentence_array)
@@ -205,9 +267,14 @@ def split_hashtag(before):
     return before
     
 
-def remove_contractions(before):
+def remove_standard_contractions(before):
     if before in contractions:
         return contractions[before]
+    return before
+
+def remove_informal_contractions(before):
+    if before in informal_contractions:
+        return informal_contractions[before]
     return before
 
 def remove_end_of_line(before):
@@ -226,10 +293,6 @@ def words_to_tags(before):
     elif before == "<user>":
         return "alice"
     return before
-
-
-def spell_correction(before):
-    return spell.correction(before) 
 
 def truncate_small_words(before , minimum_size):
     if len(before)<minimum_size:
@@ -290,18 +353,24 @@ def remove_repeats(text):
 
 def detect_laugh(text):
     """ Replace all variants of hahaha and lol by [LAUGH] """
-    return re.sub(r'\b(a*ha+h[ha]*|o?l+o+l+[ol]*)\b', '[LAUGH]', text)
+    return re.sub(r'\b(a*ha+h[ha]*|o?l+o+l+[ol]*)\b', 'laugh', text)
 
 def to_vec(lmt_wise_method):
     return np.vectorize(lmt_wise_method)
 
-# Standard pipeline
+# Standard pipeline (for BERT/RoBERTa)
 preproc_pipeline = [
     to_vec(remove_end_of_line),
     to_vec(split_hashtag), 
-    to_vec(remove_contractions), 
-    to_vec(words_to_tags),
-    #to_vec(remove_digits),
-    to_vec(remove_stopwords),
-    to_vec(lemmatize) 
+    to_vec(remove_informal_contractions), 
+    to_vec(remove_standard_contractions), 
+]
+
+extended_pipeline = [
+    to_vec(remove_end_of_line),
+    to_vec(split_hashtag), 
+    to_vec(remove_informal_contractions), 
+    to_vec(remove_standard_contractions), 
+    to_vec(translate_emojis),
+    to_vec(detect_laugh),
 ]
