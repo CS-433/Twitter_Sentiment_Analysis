@@ -1,4 +1,4 @@
-# version 0.5
+# version 0.51
 
 import numpy as np
 import wordsegment
@@ -359,7 +359,7 @@ def to_vec(lmt_wise_method):
     return np.vectorize(lmt_wise_method)
 
 # Standard pipeline (for BERT/RoBERTa)
-preproc_pipeline = [
+standard_pipeline = [
     to_vec(remove_end_of_line),
     to_vec(split_hashtag), 
     to_vec(remove_informal_contractions), 
