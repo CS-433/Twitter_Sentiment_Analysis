@@ -7,7 +7,7 @@ The python script `run.py` produces our best submission (#[!!!!!! TODO:PUT NUMBE
 Single models, as well as code needed by `run.py` to compute predictions, are contained in directories:
 
 - `roberta/` containing all the code which trains and calculates predictions for RoBERTa-based pipelines
-- `tf-idf/` containing all the code which trains and calculates predictions for TF-IDF-based pipelines
+- `tfidf/` containing all the code which trains and calculates predictions for TF-IDF-based pipelines
 - `glove/` containing all the code which trains and calculates predictions for GloVe-based pipelines
 - `fasttext/` containing all the code which trains and calculates predictions for FastText-based pipelines
 
