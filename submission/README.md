@@ -13,7 +13,7 @@ Single models, as well as code needed by `run.py` to compute predictions, are co
 
 Each of the above folders, contain the following files (assuming the model name is `[MODEL]`):
 
-- `[MODEL]_predictions.ipynb` downloads our finetuned model and makes predictions
+- `[MODEL]_predictions.ipynb` downloads our finetuned model and makes predictions for submitting to the challenge benchmark
 - `[MODEL]_training.ipynb` performs the training of the model from scratch
 - `[MODEL]_model.py` contains functions shared by the two Jupyter notebooks
 - `[MODEL]_intermediate.py` produces the intermediate logits used by our stage2 classifier
