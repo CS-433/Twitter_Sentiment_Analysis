@@ -16,7 +16,13 @@ Each of the above folders, contain the following files (assuming the model name 
 - `[MODEL]_predictions.ipynb` downloads our finetuned model and makes predictions
 - `[MODEL]_training.ipynb` performs the training of the model from scratch
 - `[MODEL]_model.py` contains functions shared by the two Jupyter notebooks
-- `[MODEL]_logits.py` produces the intermediate logits used by our stage2 classifier
+- `[MODEL]_intermediate.py` produces the intermediate logits used by our stage2 classifier
+
+
+## B. Dependencies
+
+TODO: Add list of libraries used
+(Remember about urllib)
 
 ## TODO: ADD other details below!! (Still have old description of project1)
 
