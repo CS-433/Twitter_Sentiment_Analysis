@@ -47,30 +47,7 @@ def generate_intermediate(intermediate_filename= "tf-idf_intermediate.csv"):
     df = pd.DataFrame(clf.decision_function(X_test), columns = ['Decision_function'])
     df.to_csv(intermediate_filename)
     print('Done')
-def main():
-    return 
     
-if __name__ == "__main__":
-        # Redefinition needed
-    preproc_pipeline = [to_vec(split_hashtag),  
-                    to_vec(remove_repeats)]
-    def tk(sent):
-        """ Tokenize a tweet.
 
-        Parameters
-        ----------
-            sent: string
-                a tweet
-
-        Returns
-        -------
-            tokens: list of strings
-                a tokenized version of the string
-        """
-
-        tokens = TweetTokenizer().tokenize(sent)
-        tokens = process_sentence(tokens, preproc_pipeline)
-        return tokens
-    main()
    
     
