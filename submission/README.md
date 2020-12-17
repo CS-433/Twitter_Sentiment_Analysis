@@ -27,19 +27,29 @@ All the required libraries are listed in [TODO: Name of the file] and can be ins
 
 ## C. Models info
 
-We describe our pipelines in our report [TODO: Put copy of the report in this folder]
+We describe our pipelines in section III of our report.
 
 Below, we detail the hardware requirements of different parts of our code:
 
 | Model | GPU (predictions) | GPU (training) |
 |:-----|:-----:|:-------:|
-| TF-IDF | Not required | Not required | 
-| GloVe | optional |**required**|
+| TF-IDF | Not required | Not required |
+| GloVe | _optional_ |**required**|
 | FastText | Not required | Not required |
-| RoBERTa | optional* | **required** | 
+| RoBERTa | _optional_\* | **required** |
+
 \* Obtaining test predictions without a GPU can take up to 30/40 mins
+
 ## D. `run.py`
 
-We use the logits from different _stage1_ models (TF-IDF + SVC, GloVe + LSTM, FastText, RoBERTa + Linear) to build the features vector fed to our _stage2_ classifier, which learns an optimal voting strategy.
+We use the logits calculated by different _stage1_ models (TF-IDF + SVC, GloVe + LSTM, FastText, RoBERTa + Linear) to build the features vector fed to our _stage2_ classifier, which learns an optimal voting strategy.
 
-When executing the script `run.py`, the code downloads the finetuned versions of _stage1_ & _stage2_ models (several hundreds of MB), calculates logits and finally returns label predictions.
+When executing the script `run.py`, the code downloads our precomputed logits (one file for each _stage1_ model) and inputs them to the _stage2_ classifier, which computes labels. For reproducibility purposes, however, the logits can also be easily recalculated using our finetuned models (see section E).
+
+## E. `[MODEL]_itermediate.py`
+
+Each _stage1_ models implements, in its `[MODEL]_itermediate.py` file, the following two functions:
+
+ 1. `get_intermediate()`, which returns the precomputed logits.
+
+ 2. `generate_intermediate()`, which dowloads the finetuned model and uses it to calculate logits from scratch.
