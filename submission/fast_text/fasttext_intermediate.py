@@ -1,10 +1,10 @@
 import wget
 import pandas as pd
 import pickle
-import fasttext
+import fasttext as ft
 
 
-def generate_intermediate(intermediate_filename= "tf-idf_intermediate.csv"):
+def generate_intermediate(intermediate_filename= "fasttext_intermediate.csv"):
     """ Generate the intermediate data used by stage2 classifier
     Parameters
     -----------
@@ -14,7 +14,12 @@ def generate_intermediate(intermediate_filename= "tf-idf_intermediate.csv"):
     
     # Load the model
     root = 'data/'
-    model = fasttext.load_model(root + "fasttext_trained_model.bin")
+    ############## OLD URL
+    model_url = 'https://api.onedrive.com/v1.0/shares/u!aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBclREZ3U5ejdJT1ZqcU0yOGxGTDgya0l4OGNlNGc_ZT1DMnNy/root/content'
+    model_filename = root + 'fasttext_trained_model.bin'
+    wget.download(model_url, model_filename)
+
+    model = ft.load_model(model_filename)
     
     # Prepare test set
     test_url = 'https://api.onedrive.com/v1.0/shares/u!aHR0cHM6Ly8xZHJ2Lm1zL3QvcyFBclREZ3U5ejdJT1ZqcDR5Q3hoWXM4T2FJd1JLenc_ZT1hSXh0/root/content'
@@ -38,8 +43,4 @@ def generate_intermediate(intermediate_filename= "tf-idf_intermediate.csv"):
                    columns =['confidence', 'predicted_label'])
 
     # Save predictions
-    save_filename = 'fasttext_test_confidence.csv'
-    df.to_csv(save_filename)
-
-   
-    
+    df.to_csv(intermediate_filename)
