@@ -31,13 +31,13 @@ We describe our pipelines in our report [TODO: Put copy of the report in this fo
 
 Below, we detail the hardware requirements of different parts of our code:
 
-| Model | GPU (predictions) | GPU (training) | Notes |
-|:-----|:-----:|:-------:|:-----:|
-| TF-IDF | Not required | Not required |  |
-| GloVe | optional |**required**| |
-| FastText | Not required | Not required | |
-| RoBERTa | optional | **required** | Obtaining test predictions without a GPU can take up to 30/40 mins |
-
+| Model | GPU (predictions) | GPU (training) |
+|:-----|:-----:|:-------:|
+| TF-IDF | Not required | Not required | 
+| GloVe | optional |**required**|
+| FastText | Not required | Not required |
+| RoBERTa | optional* | **required** | 
+* Obtaining test predictions without a GPU can take up to 30/40 mins
 ## D. `run.py`
 
 We use the logits from different _stage1_ models (TF-IDF + SVC, GloVe + LSTM, FastText, RoBERTa + Linear) to build the features vector fed to our _stage2_ classifier, which learns an optimal voting strategy.
