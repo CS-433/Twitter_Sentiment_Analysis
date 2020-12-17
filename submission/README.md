@@ -37,6 +37,7 @@ Below, we detail the hardware requirements of different parts of our code:
 | GloVe | _optional_ |**required**|
 | FastText | Not required | Not required |
 | RoBERTa | _optional_\* | **required** |
+
 \* Obtaining test predictions without a GPU can take up to 30/40 mins
 
 ## D. `run.py`
