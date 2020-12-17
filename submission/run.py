@@ -1,19 +1,26 @@
 from fast_text.fasttext_intermediate import generate_intermediate as gen_fasttext
 from tfidf.tfidf_intermediate import generate_intermediate as gen_tfidf
+from roberta.roberta_intermediate import generate_intermediate as gen_roberta
 import stage2_model as mod
 import os
+
 root = 'data/'
 os.makedirs(root, exist_ok=True)
 
 step = 1
 print("Step {:d}.\tCalling fastText".format(step))
-fasttext_filename = 'data/fasttext_intermediate.csv'
+fasttext_filename = root + 'fasttext_intermediate.csv'
 gen_fasttext(fasttext_filename)
 step += 1
 
 print("Step {:d}.\tCalling tfidf".format(step))
-tfidf_filename = 'data/tfidf_intermediate.csv'
-gen_fasttext(tfidf_filename)
+tfidf_filename = root + 'tfidf_intermediate.csv'
+gen_fasttext(tfidf_filename)              # !!!!!!!!!! WARNING: You call fasttext again !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+step += 1
+
+print("Step {:d}.\tCalling RoBERTa".format(step))
+roberta_filename = root + 'roberta_intermediate.csv'
+gen_roberta(roberta_filename)
 step += 1
 
 print("Step {:d}.\tLoading intermediate results".format(step))

@@ -11,6 +11,8 @@ Single models, as well as code needed by `run.py` to compute predictions, are co
 - `glove/` containing all the code which trains and calculates predictions for GloVe-based pipelines
 - `fasttext/` containing all the code which trains and calculates predictions for FastText-based pipelines
 
+The directory `data/` is populated with our pretrained models, when they are downloaded.
+
 Each of the above folders, contain the following files (assuming the model name is `[MODEL]`):
 
 - `[MODEL]_predictions.ipynb` downloads our finetuned model and makes predictions for submitting to the challenge benchmark
