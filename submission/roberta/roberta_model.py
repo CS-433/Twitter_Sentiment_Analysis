@@ -1,6 +1,6 @@
 import torch.nn as nn
 import torch
-from preprocessing_v6 import *
+from roberta.preprocessing_v6 import *
 
 def apply_preprocessing(bert_tokenizer, tweet):
     return " ".join(process_sentence(tweet.split(" "), standard_pipeline(bert_tokenizer)))
