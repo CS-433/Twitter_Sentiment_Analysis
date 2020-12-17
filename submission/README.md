@@ -2,7 +2,7 @@
 
 ## A. Overview
 
-The python script `run.py` produces our best submission (#[!!!!!! TODO:PUT NUMBER] on AIcrowd), see section (D).
+The python script `run.py` produces our best submission (#110091 on AIcrowd), see section (D).
 
 Single models, as well as code needed by `run.py` to compute predictions, are contained in directories:
 
