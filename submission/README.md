@@ -29,7 +29,7 @@ We describe our pipelines in our report [TODO: Put copy of the report in this fo
 
 Below, we detail the hardware requirements of different parts of our code:
 
-| Model | GPU (predictions) | GPU (training) | Notes |
+| Model | GPU (predictions) | GPU (training) | Notes | ? |
 |:-----|:-----:|:-------:|:-----:|:--------|
 | TF-IDF | ??? | ??? | ??? | ??? | 
 | GloVe | optional |**required**| ?? | ?? |
