@@ -5,15 +5,16 @@
 import transformers
 from transformers import AutoTokenizer, RobertaForSequenceClassification
 import numpy as np
-import urllib
+import requests
 
 # Contains preprocessing functions
 from preprocessing_v6 import *
 # Contains all the functions related to the model
 from roberta_model import *
 
-def dowload_resource(local_name, url):
-   urllib.urlretrieve(url, filename=local_name)
+def download_resource(local_name, url):
+  resp = requests.get(url, allow_redirects=True)
+  open(local_name, "wb").write(resp.content)
 
 MAX_LENGTH = 200   
 BATCH_SIZE = 32
@@ -27,6 +28,9 @@ def generate_intermediate(intermediate_filename="roberta_intermediate.csv"):
   intermediate_filename: str, optional
     The path and name of the file with the intermediate data
   """
+  if not torch.cuda.is_available():
+    raise Error("CUDA-enabled device needed to calculate logits")
+
   used_device = torch.device('cuda:0')
 
   # Load tokenizer
@@ -43,18 +47,23 @@ def generate_intermediate(intermediate_filename="roberta_intermediate.csv"):
   download_resource("test_data.txt", "https://api.onedrive.com/v1.0/shares/u!aHR0cHM6Ly8xZHJ2Lm1zL3QvcyFBclREZ3U5ejdJT1ZqcDR5Q3hoWXM4T2FJd1JLenc_ZT1hSXh0/root/content")
   
   ordered_input = []
+  ordered_labels = []
+
   with open("test_data.txt", "r") as f:
       for line in f.readlines():
-          ordered_input.append(line)
+          comma_pos = line.find(",")
+          ordered_labels.append(int(line[:comma_pos]))
+          ordered_input.append(line[comma_pos+1:])
 
   ordered_input = np.array(ordered_input)
+  ordered_labels = np.array(ordered_labels)
 
   # Sanity check
   assert ordered_input.shape[0] == 10_000
 
   ordered_dataset = SentimentDataset(
       chunks=ordered_input,
-      labels=np.,
+      labels=ordered_labels,
       tokenizer=bert_tokenizer,
       max_len=MAX_LENGTH
   )
@@ -62,7 +71,7 @@ def generate_intermediate(intermediate_filename="roberta_intermediate.csv"):
   ordered_loader = get_loader(ordered_dataset, BATCH_SIZE)
 
   # Generate logits
-  sub_idxs, sub_labels, sub_logits = prepare_submission(reloaded_model, bert_tokenizer, used_device, BATCH_SIZE, max_length=MAX_LENGTH, test_filename="test_data.txt")
+  sub_idxs, sub_labels, sub_logits = prepare_submission(reloaded_model, bert_tokenizer, used_device, BATCH_SIZE, max_len=MAX_LENGTH, test_filename="test_data.txt")
 
   # Save intermediate result to file
   np.savetxt(intermediate_filename, np.concatenate([sub_idxs[...,np.newaxis], sub_logits], axis=1), fmt=['%d', '%f', '%f'], delimiter=',', header="Idx,Logit_zero,Logit_one", comments="")
