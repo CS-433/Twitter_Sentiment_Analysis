@@ -1,7 +1,11 @@
 import numpy as np 
 import pandas as pd 
+from nltk.tokenize import TweetTokenizer
+import re
+from wordsegment import load, segment
+load()
 
-
+### Helpers
 def txt_to_list(filename):
     """ Extracts a text file into a list of tweets.
     
@@ -19,7 +23,7 @@ def txt_to_list(filename):
     tweets = []
     with open(filename, encoding = 'utf-8') as f:
         for line in f:
-            tweets.append(line)
+            tweets.append(line[:-1]) # Remove '\n'
             
     return tweets
 
@@ -32,6 +36,8 @@ def merge_shuffle_label(positive, negative, seed = 0):
         list of positive tweets
     negative: list of strings
         list of negative tweets
+    seed: int, optional
+        seed to be passed to numpy.random before shuffling
         
     Returns 
     -------
@@ -51,45 +57,7 @@ def merge_shuffle_label(positive, negative, seed = 0):
     y = y[random_idxs].astype(int)
     
     return all_tweets, y
-    
-    
-def write_labeled(filename, tweets, y):
-    """ Write a labeled dataset to text file.  
-    
-    Parameters
-    ----------
-    filename: string
-        relative path to save
-    tweets: 1D numpy array of strings
-        tweets to save
-    y: 1D numpy array of integers (0 or 1)
-        corresponding labels 
-    """
-    
-    
-    with open(filename, 'w', encoding = 'utf-8') as f:
-        for i, tweet in enumerate(tweets):
-            f.write('__label__{} '.format(y[i]) + tweet)
-            
-def write_unlabeled(filename, tweets):
-    """ Write a labeled dataset to text file.  
-    
-    Parameters
-    ----------
-    filename: string
-        relative path to save
-    tweets: 1D numpy array of strings
-        tweets to save
-    y: 1D numpy array of integers (0 or 1)
-        corresponding labels 
-    """
-    
-    
-    with open(filename, 'w', encoding = 'utf-8') as f:
-        for i, tweet in enumerate(tweets):
-            f.write(tweet)
-        
-        
+
 def split_dataset(fraction, tweets, y):
     """ Split dataset into training and validation.  
     
@@ -122,23 +90,7 @@ def split_dataset(fraction, tweets, y):
     y_train, y_val = y[:N_train], y[N_train:]
     
     return train, val, y_train, y_val 
-    
 
-def save_pred(filename, predictions):
-    """ Save (0, 1) predictions in the desired csv format for AIcrowd, with (-1, 1) labels. 
-    
-    Parameters
-    ----------
-    filename: string
-        relative path of csv file
-    predictions: 1D numpy array of (0, 1)
-        predictions for unseen test set
-    """
-    
-    preds = pd.DataFrame((2*predictions-1).astype(int), columns = ['Prediction'], index = np.arange(1, len(predictions)+1))
-    preds.index.names = ['Id']
-    preds.to_csv(filename)
-    
 def judge_pred(classifier, xtr, xv, ytr, yv):
     """ Measure performance on training and validation sets. 
     
@@ -160,3 +112,64 @@ def judge_pred(classifier, xtr, xv, ytr, yv):
     train_acc = (classifier.predict(xtr) == ytr).mean()
     val_acc = (classifier.predict(xv) == yv).mean()
     print('Training set accuracy: {:.2f}% / validation set: {:.2f}%'.format(100*train_acc, 100*val_acc))
+    
+def save_pred(filename, predictions):
+    """ Save (0, 1) predictions in the desired csv format for AIcrowd, with (-1, 1) labels. 
+    
+    Parameters
+    ----------
+    filename: string
+        relative path of csv file
+    predictions: 1D numpy array of (0, 1)
+        predictions for unseen test set
+    """
+    
+    preds = pd.DataFrame((2*predictions-1).astype(int), columns = ['Prediction'], index = np.arange(1, len(predictions)+1))
+    preds.index.names = ['Id']
+    preds.to_csv(filename)
+
+
+### Pre-processing
+
+def split_hashtag(before):
+    """ Split a token if it is a hashtag (separating words after '#') """
+    if len(before) == 0:
+        return ""
+    
+    if before[0] == "#":
+        return ' '.join(segment(before))
+    return before
+
+def remove_repeats(text):
+    """ Replace repeated letters by single letter. """
+    return re.sub(r'([a-z])\1+', r'\1', text)
+
+def to_vec(lmt_wise_method):
+    """ Make element-wise operation application to iterables. """
+    return np.vectorize(lmt_wise_method)
+
+def process_sentence(sentence_array, purge_methods):
+    """ Apply a sequence of pre-processing methods to a list of tokens. """
+    for method in purge_methods:
+        sentence_array = method(sentence_array)
+    return sentence_array
+
+preproc_pipeline = [to_vec(split_hashtag),  
+                    to_vec(remove_repeats)]
+
+def tk(sent):
+    """ Tokenize a tweet.
+    
+    Parameters
+    ----------
+        sent: string
+            a tweet
+        
+    Returns
+    -------
+        tokens: list of strings
+            a tokenized version of the string
+    """
+    tokens = TweetTokenizer().tokenize(sent)
+    tokens = process_sentence(tokens, preproc_pipeline)
+    return tokens
