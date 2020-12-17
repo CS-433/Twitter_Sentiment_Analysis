@@ -15,7 +15,7 @@ step += 1
 
 print("Step {:d}.\tCalling tfidf".format(step))
 tfidf_filename = root + 'tfidf_intermediate.csv'
-gen_fasttext(tfidf_filename)              # !!!!!!!!!! WARNING: You call fasttext again !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+gen_tfidf(tfidf_filename)
 step += 1
 
 print("Step {:d}.\tCalling RoBERTa".format(step))
