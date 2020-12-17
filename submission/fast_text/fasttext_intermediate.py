@@ -14,8 +14,8 @@ def generate_intermediate(intermediate_filename= "fasttext_intermediate.csv"):
     
     # Load the model
     root = 'data/'
-    ############## OLD URL
-    model_url = 'https://api.onedrive.com/v1.0/shares/u!aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBclREZ3U5ejdJT1ZqcU0yOGxGTDgya0l4OGNlNGc_ZT1DMnNy/root/content'
+    ## OLD model_url = 'https://api.onedrive.com/v1.0/shares/u!aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBclREZ3U5ejdJT1ZqcU0yOGxGTDgya0l4OGNlNGc_ZT1DMnNy/root/content'
+    model_url = 'https://api.onedrive.com/v1.0/shares/u!aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBclREZ3U5ejdJT1ZqcU0zb1h1eUhDbkpfWHRqS0E_ZT0xblV3/root/content'
     model_filename = root + 'fasttext_trained_model.bin'
     wget.download(model_url, model_filename)
 
