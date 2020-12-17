@@ -23,7 +23,7 @@ Each of the above folders, contain the following files (assuming the model name 
 
 ## B. Dependencies
 
-All the required libraries are listed in [TODO: Name of the file] and can be installed with the command `[TODO: COMMAND]`.
+All the required libraries are listed in `env.yml` and can be installed with the command `conda env create -f environment.yml`
 
 ## C. Models info
 
@@ -46,7 +46,7 @@ We use the logits calculated by different _stage1_ models (TF-IDF + SVC, GloVe +
 
 When executing the script `run.py`, the code downloads our precomputed logits (one file for each _stage1_ model) and inputs them to the _stage2_ classifier, which computes labels. For reproducibility purposes, however, the logits can also be easily recalculated using our finetuned models (see section E).
 
-## E. `[MODEL]_itermediate.py`
+## E. `[MODEL]_intermediate.py`
 
 Each _stage1_ models implements, in its `[MODEL]_itermediate.py` file, the following two functions:
 
