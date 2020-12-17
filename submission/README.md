@@ -37,7 +37,7 @@ Below, we detail the hardware requirements of different parts of our code:
 | GloVe | optional |**required**|
 | FastText | Not required | Not required |
 | RoBERTa | optional* | **required** | 
-* Obtaining test predictions without a GPU can take up to 30/40 mins
+\* Obtaining test predictions without a GPU can take up to 30/40 mins
 ## D. `run.py`
 
 We use the logits from different _stage1_ models (TF-IDF + SVC, GloVe + LSTM, FastText, RoBERTa + Linear) to build the features vector fed to our _stage2_ classifier, which learns an optimal voting strategy.
