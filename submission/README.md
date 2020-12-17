@@ -23,7 +23,7 @@ Each of the above folders, contain the following files (assuming the model name 
 
 ## B. Dependencies
 
-All the required libraries are listed in [TODO: Name of the file] and can be installed with the command `[TODO: COMMAND]`.
+All the required libraries are listed in `env.yml` and can be installed with the command `conda env create -f environment.yml`
 
 ## C. Models info
 
