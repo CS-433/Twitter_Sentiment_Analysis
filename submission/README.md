@@ -31,7 +31,7 @@ Below, we detail the hardware requirements of different parts of our code:
 
 | Model | GPU (predictions) | GPU (training) | Notes |
 |:-----|:-----:|:-------:|:-----:|
-| TF-IDF | ??? | ??? | ??? |
+| TF-IDF | Not required | Not required |  |
 | GloVe | optional |**required**| ?? |
 | FastText | ??? | ??? | ??? |
 | RoBERTa | optional | **required** | Obtaining test predictions without a GPU can take up to 30/40 mins |
