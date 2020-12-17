@@ -9,7 +9,7 @@ Single models, as well as code needed by `run.py` to compute predictions, are co
 - `roberta/` containing all the code which trains and calculates predictions for RoBERTa-based pipelines
 - `tfidf/` containing all the code which trains and calculates predictions for TF-IDF-based pipelines
 - `glove/` containing all the code which trains and calculates predictions for GloVe-based pipelines
-- `fasttext/` containing all the code which trains and calculates predictions for FastText-based pipelines
+- `fast_text/` containing all the code which trains and calculates predictions for FastText-based pipelines
 
 The directory `data/` is populated with our pretrained models, when they are downloaded.
 
