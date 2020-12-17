@@ -1,0 +1,769 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>roberta.preprocessing_v6 API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>roberta.preprocessing_v6</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># version 0.6
+
+import numpy as np
+import wordsegment
+from wordsegment import load, segment
+load()
+
+import nltk
+from nltk.corpus import wordnet
+nltk.download(&#39;wordnet&#39;)
+from nltk.corpus import stopwords
+nltk.download(&#39;stopwords&#39;)
+stop_words = set(stopwords.words(&#39;english&#39;)) 
+
+from nltk.stem import PorterStemmer
+from nltk.stem import WordNetLemmatizer
+ps=PorterStemmer()
+wordnet_lemmatizer = WordNetLemmatizer()
+
+import re
+
+# Adapted from here: https://en.wikipedia.org/wiki/Wikipedia:List_of_English_contractions
+contractions = {
+&#34;ain&#39;t&#34;: &#34;be not&#34;, # &#34;am not / are not / is not / has not / have not&#34;,
+&#34;aren&#39;t&#34;: &#34;be not&#34;, # &#34;are not / am not&#34;,
+&#34;can&#39;t&#34;: &#34;cannot&#34;,
+&#34;can&#39;t&#39;ve&#34;: &#34;cannot have&#34;,
+&#34;&#39;cause&#34;: &#34;because&#34;,
+&#34;could&#39;ve&#34;: &#34;could have&#34;,
+&#34;couldn&#39;t&#34;: &#34;could not&#34;,
+&#34;couldn&#39;t&#39;ve&#34;: &#34;could not have&#34;,
+&#34;didn&#39;t&#34;: &#34;did not&#34;,
+&#34;doesn&#39;t&#34;: &#34;does not&#34;,
+&#34;don&#39;t&#34;: &#34;do not&#34;,
+&#34;hadn&#39;t&#34;: &#34;had not&#34;,
+&#34;hadn&#39;t&#39;ve&#34;: &#34;had not have&#34;,
+&#34;hasn&#39;t&#34;: &#34;has not&#34;,
+&#34;haven&#39;t&#34;: &#34;have not&#34;,
+&#34;he&#39;d&#34;: &#34;he would&#34;, # &#34;he had / he would&#34;,
+&#34;he&#39;d&#39;ve&#34;: &#34;he would have&#34;,
+&#34;he&#39;ll&#34;: &#34;he will&#34;, # &#34;he shall / he will&#34;,
+&#34;he&#39;s&#34;: &#34;he is&#34;, # &#34;he has / he is&#34;,
+&#34;how&#39;d&#34;: &#34;how did&#34;,
+&#34;how&#39;d&#39;y&#34;: &#34;how do you&#34;,
+&#34;howdy&#34;: &#34;how do you&#34;,
+&#34;how&#39;ll&#34;: &#34;how will&#34;,
+&#34;how&#39;s&#34;: &#34;how&#34;, # &#34;how has / how is / how does&#34;,
+&#34;i&#39;d&#34;: &#34;i would&#34;, # &#34;I had / I would&#34;,
+&#34;i&#39;d&#39;ve&#34;: &#34;i would have&#34;,
+&#34;i&#39;ll&#34;: &#34;i will&#34;, # &#34;I shall / I will&#34;,
+&#34;i&#39;m&#34;: &#34;i am&#34;,
+&#34;i&#39;ve&#34;: &#34;i have&#34;,
+&#34;isn&#39;t&#34;: &#34;is not&#34;,
+&#34;it&#39;d&#34;: &#34;it would&#34;, # &#34;it had / it would&#34;,
+&#34;it&#39;ll&#34;: &#34;it will&#34;, # &#34;it shall / it will&#34;,
+&#34;it&#39;s&#34;: &#34;it is&#34;, # &#34;it has / it is&#34;,
+&#34;let&#39;s&#34;: &#34;let us&#34;,
+&#34;ma&#39;am&#34;: &#34;madam&#34;,
+&#34;mustn&#39;t&#34;: &#34;must not&#34;,
+&#34;needn&#39;t&#34;: &#34;need not&#34;,
+&#34;o&#39;clock&#34;: &#34;of the clock&#34;,
+&#34;oughtn&#39;t&#34;: &#34;ought not&#34;,
+&#34;shan&#39;t&#34;: &#34;shall not&#34;,
+&#34;sha&#39;n&#39;t&#34;: &#34;shall not&#34;,
+&#34;she&#39;d&#34;: &#34;she would&#34;, # &#34;she had / she would&#34;,
+&#34;she&#39;d&#39;ve&#34;: &#34;she would have&#34;,
+&#34;she&#39;ll&#34;: &#34;she will&#34;, # &#34;she shall / she will&#34;,
+&#34;she&#39;s&#34;: &#34;she is&#34;, # &#34;she has / she is&#34;,
+&#34;should&#39;ve&#34;: &#34;should have&#34;,
+&#34;shouldn&#39;t&#34;: &#34;should not&#34;,
+&#34;that&#39;s&#34;: &#34;that is&#34;, # &#34;that has / that is&#34;,
+&#34;there&#39;s&#34;: &#34;there is&#34;, # &#34;there has / there is&#34;,
+&#34;they&#39;d&#34;: &#34;they would&#34;, # &#34;they had / they would&#34;,
+&#34;they&#39;ll&#34;: &#34;they will&#34;, # &#34;they shall / they will&#34;,
+&#34;they&#39;re&#34;: &#34;they are&#34;,
+&#34;they&#39;ve&#34;: &#34;they have&#34;,
+&#34;wasn&#39;t&#34;: &#34;was not&#34;,
+&#34;we&#39;d&#34;: &#34;we would&#34;, # &#34;we had / we would&#34;,
+&#34;we&#39;ll&#34;: &#34;we will&#34;,
+&#34;we&#39;re&#34;: &#34;we are&#34;,
+&#34;we&#39;ve&#34;: &#34;we have&#34;,
+&#34;weren&#39;t&#34;: &#34;were not&#34;,
+&#34;what&#39;s&#34;: &#34;what is&#34;, # &#34;what has / what is&#34;,
+&#34;when&#39;ve&#34;: &#34;when have&#34;,
+&#34;where&#39;d&#34;: &#34;where did&#34;,
+&#34;where&#39;s&#34;: &#34;where is&#34;, # &#34;where has / where is&#34;,
+&#34;where&#39;ve&#34;: &#34;where have&#34;,
+&#34;who&#39;ll&#34;: &#34;who will&#34;, # &#34;who shall / who will&#34;,
+&#34;who&#39;s&#34;: &#34;who is&#34;, # &#34;who has / who is&#34;,
+&#34;who&#39;ve&#34;: &#34;who have&#34;,
+&#34;why&#39;s&#34;: &#34;why is&#34;, # &#34;why has / why is&#34;,
+&#34;why&#39;ve&#34;: &#34;why have&#34;,
+&#34;will&#39;ve&#34;: &#34;will have&#34;,
+&#34;won&#39;t&#34;: &#34;will not&#34;,
+&#34;would&#39;ve&#34;: &#34;would have&#34;,
+&#34;wouldn&#39;t&#34;: &#34;would not&#34;,
+&#34;y&#39;all&#34;: &#34;you all&#34;,
+&#34;you&#39;d&#34;: &#34;you would&#34;, # &#34;you had / you would&#34;,
+&#34;you&#39;ll&#34;: &#34;you will&#34;, # &#34;you shall / you will&#34;,
+&#34;you&#39;re&#34;: &#34;you are&#34;,
+&#34;you&#39;ve&#34;: &#34;you have&#34;,
+###################################################################
+## Also, many tweets have the same contractions without accents  ##
+###################################################################
+&#34;aint&#34;: &#34;be not&#34;, # &#34;am not / are not / is not / has not / have not&#34;,
+&#34;arent&#34;: &#34;be not&#34;, # &#34;are not / am not&#34;,
+&#34;cant&#34;: &#34;cannot&#34;,
+&#34;cantve&#34;: &#34;cannot have&#34;,
+&#34;cause&#34;: &#34;because&#34;,
+&#34;couldve&#34;: &#34;could have&#34;,
+&#34;couldnt&#34;: &#34;could not&#34;,
+&#34;couldntve&#34;: &#34;could not have&#34;,
+&#34;didnt&#34;: &#34;did not&#34;,
+&#34;doesnt&#34;: &#34;does not&#34;,
+&#34;dont&#34;: &#34;do not&#34;,
+&#34;hadnt&#34;: &#34;had not&#34;,
+&#34;hadntve&#34;: &#34;had not have&#34;,
+&#34;hasnt&#34;: &#34;has not&#34;,
+&#34;havent&#34;: &#34;have not&#34;,
+&#34;hed&#34;: &#34;he would&#34;, # &#34;he had / he would&#34;,
+&#34;hedve&#34;: &#34;he would have&#34;,
+&#34;hell&#34;: &#34;he will&#34;, # &#34;he shall / he will&#34;,
+&#34;hes&#34;: &#34;he is&#34;, # &#34;he has / he is&#34;,
+&#34;howd&#34;: &#34;how did&#34;,
+&#34;howdy&#34;: &#34;how do you&#34;,
+&#34;howdy&#34;: &#34;how do you&#34;,
+&#34;howll&#34;: &#34;how will&#34;,
+&#34;hows&#34;: &#34;how&#34;, # &#34;how has / how is / how does&#34;,
+&#34;id&#34;: &#34;i would&#34;, # &#34;I had / I would&#34;,
+&#34;idve&#34;: &#34;i would have&#34;,
+&#34;ill&#34;: &#34;i will&#34;, # &#34;I shall / I will&#34;,
+&#34;im&#34;: &#34;i am&#34;,
+&#34;ive&#34;: &#34;i have&#34;,
+&#34;isnt&#34;: &#34;is not&#34;,
+&#34;itd&#34;: &#34;it would&#34;, # &#34;it had / it would&#34;,
+&#34;itll&#34;: &#34;it will&#34;, # &#34;it shall / it will&#34;,
+&#34;its&#34;: &#34;it is&#34;, # &#34;it has / it is&#34;,
+&#34;lets&#34;: &#34;let us&#34;,
+&#34;maam&#34;: &#34;madam&#34;,
+&#34;mustnt&#34;: &#34;must not&#34;,
+&#34;neednt&#34;: &#34;need not&#34;,
+&#34;oclock&#34;: &#34;of the clock&#34;,
+&#34;oughtnt&#34;: &#34;ought not&#34;,
+&#34;shant&#34;: &#34;shall not&#34;,
+&#34;shant&#34;: &#34;shall not&#34;,
+&#34;shed&#34;: &#34;she would&#34;, # &#34;she had / she would&#34;,
+&#34;shedve&#34;: &#34;she would have&#34;,
+&#34;shell&#34;: &#34;she will&#34;, # &#34;she shall / she will&#34;,
+&#34;shes&#34;: &#34;she is&#34;, # &#34;she has / she is&#34;,
+&#34;shouldve&#34;: &#34;should have&#34;,
+&#34;shouldnt&#34;: &#34;should not&#34;,
+&#34;thats&#34;: &#34;that is&#34;, # &#34;that has / that is&#34;,
+&#34;theres&#34;: &#34;there is&#34;, # &#34;there has / there is&#34;,
+&#34;theyd&#34;: &#34;they would&#34;, # &#34;they had / they would&#34;,
+&#34;theyll&#34;: &#34;they will&#34;, # &#34;they shall / they will&#34;,
+&#34;theyre&#34;: &#34;they are&#34;,
+&#34;theyve&#34;: &#34;they have&#34;,
+&#34;wasnt&#34;: &#34;was not&#34;,
+&#34;wed&#34;: &#34;we would&#34;, # &#34;we had / we would&#34;,
+&#34;well&#34;: &#34;we will&#34;,
+&#34;were&#34;: &#34;we are&#34;,
+&#34;weve&#34;: &#34;we have&#34;,
+&#34;werent&#34;: &#34;were not&#34;,
+&#34;whats&#34;: &#34;what is&#34;, # &#34;what has / what is&#34;,
+&#34;whenve&#34;: &#34;when have&#34;,
+&#34;whered&#34;: &#34;where did&#34;,
+&#34;wheres&#34;: &#34;where is&#34;, # &#34;where has / where is&#34;,
+&#34;whereve&#34;: &#34;where have&#34;,
+&#34;wholl&#34;: &#34;who will&#34;, # &#34;who shall / who will&#34;,
+&#34;whos&#34;: &#34;who is&#34;, # &#34;who has / who is&#34;,
+&#34;whove&#34;: &#34;who have&#34;,
+&#34;whys&#34;: &#34;why is&#34;, # &#34;why has / why is&#34;,
+&#34;whyve&#34;: &#34;why have&#34;,
+&#34;willve&#34;: &#34;will have&#34;,
+&#34;wont&#34;: &#34;will not&#34;,
+&#34;wouldve&#34;: &#34;would have&#34;,
+&#34;wouldnt&#34;: &#34;would not&#34;,
+&#34;yall&#34;: &#34;you all&#34;,
+&#34;youd&#34;: &#34;you would&#34;, # &#34;you had / you would&#34;,
+&#34;youll&#34;: &#34;you will&#34;, # &#34;you shall / you will&#34;,
+&#34;youre&#34;: &#34;you are&#34;,
+&#34;youve&#34;: &#34;you have&#34;
+}
+
+### TODO: Give number of appearences
+
+# Taken from &#39;https://www.really-learn-english.com/informal-contractions-american-english.html&#39;
+informal_contractions = {
+# Shortened pronouns
+&#34;u&#34;: &#34;you&#34;,
+&#34;ur&#34;: &#34;your&#34;, # 14K occurrences
+
+##################################
+#### Other informal contractions
+##################################
+# With &#39;you&#39;
+&#34;dontcha&#34;: &#34;do not you&#34;,
+&#34;didntcha&#34;: &#34;did not you&#34;,
+&#34;wontcha&#34;: &#34;will not you&#34;,
+&#34;whatcha or watcha&#34;: &#34;what are you&#34;,
+&#34;gotcha&#34;: &#34;got you&#34;,
+&#34;betcha&#34;: &#34;bet you&#34;,
+
+# With &#39;have&#39;
+&#34;shoulda&#34;: &#34;should have&#34;,
+&#34;coulda&#34;: &#34;could have&#34;,
+&#34;woulda&#34;: &#34;would have&#34;,
+&#34;mighta&#34;: &#34;might have&#34;,
+&#34;musta&#34;: &#34;must have&#34;,
+&#34;couldna&#34;: &#34;could not have&#34;,
+&#34;shouldna&#34;: &#34;should not have&#34;,
+&#34;wouldna&#34;: &#34;would not have&#34;,
+&#34;she&#39;da&#34;: &#34;she would have&#34;,
+&#34;he&#39;da&#34;: &#34;he would have&#34;,
+&#34;I&#39;da&#34;: &#34;I would have&#34;,
+&#34;they&#39;da&#34;: &#34;They would have&#34;,
+&#34;you&#39;da&#34;: &#34;You would have&#34;,
+
+# With &#39;of&#39;
+&#34;kinda&#34;: &#34;kind of&#34;,
+&#34;outta&#34;: &#34;out of&#34;,
+&#34;cuppa&#34;: &#34;cup of&#34;,
+&#34;sorta&#34;: &#34;sort of&#34;,
+&#34;lotta&#34;: &#34;lot of&#34;,
+
+# With &#39;to&#39;
+&#34;gotta&#34;: &#34;got to&#34;,
+&#34;gonna&#34;: &#34;going to&#34;,
+&#34;needa&#34;: &#34;need to&#34;,
+&#34;wanna&#34;: &#34;want to&#34;,
+&#34;hafta&#34;: &#34;have to&#34;,
+&#34;hasta&#34;: &#34;has to&#34;,
+&#34;oughta&#34;: &#34;ought to&#34;,
+&#34;supposeta&#34;: &#34;supposed to&#34;,
+&#34;useta&#34;: &#34;used to&#34;,
+
+# Others
+&#34;gimme&#34;: &#34;give me&#34;,
+&#34;lemme&#34;: &#34;let me&#34;,
+&#34;tellem&#34;: &#34;tell them&#34;,
+&#34;dunno&#34;: &#34;do not know&#34;,
+&#34;gotta&#34;: &#34;got a&#34;,
+&#34;c&#39;mon&#34;: &#34;come on&#34;,
+&#34;s&#39;more&#34;: &#34;some more&#34;
+}
+
+def process_sentence(sentence_array, purge_methods):
+    for method in purge_methods:
+        sentence_array = method(sentence_array)
+    return sentence_array
+
+def remove_hashtag(before, tokenizer):
+    if len(before) == 0:
+        return &#34;&#34;
+    
+    if before[0] == &#34;#&#34;:
+        return before[1:]
+    return before
+
+
+def split_hashtag(before, tokenizer):
+    if len(before) == 0:
+        return &#34;&#34;
+    
+    if before[0] == &#34;#&#34;:
+        return &#39; &#39;.join(segment(before))
+    return before
+    
+
+def remove_standard_contractions(before, tokenizer):
+    if before in contractions:
+        return contractions[before]
+    return before
+
+def remove_informal_contractions(before, tokenizer):
+    if before in informal_contractions:
+        return informal_contractions[before]
+    return before
+
+def remove_end_of_line(before, tokenizer):
+    if len(before) == 0:
+        return &#34;&#34;
+    
+    if before[-1] == &#39;\n&#39;:
+        return before[:-1]
+    return before
+
+def words_to_tags(before, tokenizer):
+    if before == &#34;&lt;url&gt;&#34;:
+        return &#34;[UNK]&#34;
+    elif before == &#34;xox&#34;:
+        return &#34;kiss&#34;
+    elif before == &#34;&lt;user&gt;&#34;:
+        return &#34;alice&#34;
+    return before
+
+def truncate_small_words(before , minimum_size):
+    if len(before)&lt;minimum_size:
+        return &#34;&#34;
+    return before
+
+def remove_digits(before):
+    if before.isdigit() :
+        return &#34;&#34;
+    return before
+
+def remove_stopwords(before):
+    if before in stop_words:
+        return &#34;&#34;
+    return before
+    
+def stemming(before):
+    return ps.stem(before)
+
+def lemmatize(before):
+    return wordnet_lemmatizer.lemmatize(before)
+
+positive_emojis = r&#34;(([&lt;&gt;]?[:;=8][\-o\*]?[\)\]dDpP\}@])|([\(\[dDpP\{@][\-o\*]?[:;=8][&lt;&gt;]?))&#34;
+negative_emojis = r&#34;(([&lt;&gt;]?[:;=8][\-o\*\&#39;]?[\(\[/\{\|\\])|([\)\]/\}\|\\][\-o\*\&#39;]?[:;=8][&lt;&gt;]?))&#34;
+
+# Elaborated from: (credit http://sentiment.christopherpotts.net/code-data/happyfuntokenizing.py)
+# (
+#   (
+#     [&lt;&gt;]?
+#     [:;=8]
+#     [\-o\*\&#39;]?
+#     [\)\]\(\[dDpP/\:\}\{@\|\\]
+#   )|(
+#     [\)\]\(\[dDpP/\:\}\{@\|\\]
+#     [\-o\*\&#39;]?
+#     [:;=8]
+#     [&lt;&gt;]?
+#   )
+# )
+
+def translate_emojis(before, tokenizer):
+    if len(before) == 0:
+        return &#34;&#34;
+
+    # Do not substitute, if the vocab already contains the emojii
+    if len(tokenizer.tokenize(&#34; &#34; + before)) == 1:
+        return before
+
+    pos = re.match(positive_emojis, before)
+    neg = re.match(negative_emojis, before)
+
+    if pos is not None:
+        # Existing token in RoBERTa vocab
+        return &#34;:-)&#34;
+    elif neg is not None:
+        # Existing token in RoBERTa vocab
+        return &#34;:(&#34;
+    else:
+        return before
+    
+def remove_repeats(text, tokenizer):
+    &#34;&#34;&#34; Replace repeated letters by single letter. &#34;&#34;&#34;
+    return re.sub(r&#39;([a-z])\1+&#39;, r&#39;\1&#39;, text)
+
+def detect_laugh(text, tokenizer):
+    &#34;&#34;&#34; Replace all variants of hahaha and lol by &#39;lol&#39; &#34;&#34;&#34;
+    return re.sub(r&#39;\b(a*ha+h[ha]*|o?l+o+l+[ol]*)\b&#39;, &#39;lol&#39;, text)
+
+def to_vec(lmt_wise_method, tokenizer):
+    return np.vectorize(lambda x: lmt_wise_method(x, tokenizer))
+
+# Standard pipeline (for RoBERTa)
+def standard_pipeline(tokenizer):
+    _standard_pipeline = [
+        to_vec(remove_end_of_line, tokenizer),
+        to_vec(split_hashtag, tokenizer), 
+        to_vec(remove_informal_contractions, tokenizer), 
+        to_vec(remove_standard_contractions, tokenizer), 
+    ]
+    return _standard_pipeline
+
+def extended_pipeline(tokenizer):
+    _extended_pipeline = [
+        to_vec(remove_end_of_line, tokenizer),
+        to_vec(split_hashtag, tokenizer), 
+        to_vec(remove_informal_contractions, tokenizer), 
+        to_vec(remove_standard_contractions, tokenizer), 
+        to_vec(translate_emojis, tokenizer),
+        to_vec(detect_laugh, tokenizer),
+    ]
+    return _extended_pipeline</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="roberta.preprocessing_v6.detect_laugh"><code class="name flex">
+<span>def <span class="ident">detect_laugh</span></span>(<span>text, tokenizer)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Replace all variants of hahaha and lol by 'lol'</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def detect_laugh(text, tokenizer):
+    &#34;&#34;&#34; Replace all variants of hahaha and lol by &#39;lol&#39; &#34;&#34;&#34;
+    return re.sub(r&#39;\b(a*ha+h[ha]*|o?l+o+l+[ol]*)\b&#39;, &#39;lol&#39;, text)</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.extended_pipeline"><code class="name flex">
+<span>def <span class="ident">extended_pipeline</span></span>(<span>tokenizer)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extended_pipeline(tokenizer):
+    _extended_pipeline = [
+        to_vec(remove_end_of_line, tokenizer),
+        to_vec(split_hashtag, tokenizer), 
+        to_vec(remove_informal_contractions, tokenizer), 
+        to_vec(remove_standard_contractions, tokenizer), 
+        to_vec(translate_emojis, tokenizer),
+        to_vec(detect_laugh, tokenizer),
+    ]
+    return _extended_pipeline</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.lemmatize"><code class="name flex">
+<span>def <span class="ident">lemmatize</span></span>(<span>before)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def lemmatize(before):
+    return wordnet_lemmatizer.lemmatize(before)</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.process_sentence"><code class="name flex">
+<span>def <span class="ident">process_sentence</span></span>(<span>sentence_array, purge_methods)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def process_sentence(sentence_array, purge_methods):
+    for method in purge_methods:
+        sentence_array = method(sentence_array)
+    return sentence_array</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.remove_digits"><code class="name flex">
+<span>def <span class="ident">remove_digits</span></span>(<span>before)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_digits(before):
+    if before.isdigit() :
+        return &#34;&#34;
+    return before</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.remove_end_of_line"><code class="name flex">
+<span>def <span class="ident">remove_end_of_line</span></span>(<span>before, tokenizer)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_end_of_line(before, tokenizer):
+    if len(before) == 0:
+        return &#34;&#34;
+    
+    if before[-1] == &#39;\n&#39;:
+        return before[:-1]
+    return before</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.remove_hashtag"><code class="name flex">
+<span>def <span class="ident">remove_hashtag</span></span>(<span>before, tokenizer)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_hashtag(before, tokenizer):
+    if len(before) == 0:
+        return &#34;&#34;
+    
+    if before[0] == &#34;#&#34;:
+        return before[1:]
+    return before</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.remove_informal_contractions"><code class="name flex">
+<span>def <span class="ident">remove_informal_contractions</span></span>(<span>before, tokenizer)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_informal_contractions(before, tokenizer):
+    if before in informal_contractions:
+        return informal_contractions[before]
+    return before</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.remove_repeats"><code class="name flex">
+<span>def <span class="ident">remove_repeats</span></span>(<span>text, tokenizer)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Replace repeated letters by single letter.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_repeats(text, tokenizer):
+    &#34;&#34;&#34; Replace repeated letters by single letter. &#34;&#34;&#34;
+    return re.sub(r&#39;([a-z])\1+&#39;, r&#39;\1&#39;, text)</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.remove_standard_contractions"><code class="name flex">
+<span>def <span class="ident">remove_standard_contractions</span></span>(<span>before, tokenizer)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_standard_contractions(before, tokenizer):
+    if before in contractions:
+        return contractions[before]
+    return before</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.remove_stopwords"><code class="name flex">
+<span>def <span class="ident">remove_stopwords</span></span>(<span>before)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_stopwords(before):
+    if before in stop_words:
+        return &#34;&#34;
+    return before</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.split_hashtag"><code class="name flex">
+<span>def <span class="ident">split_hashtag</span></span>(<span>before, tokenizer)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def split_hashtag(before, tokenizer):
+    if len(before) == 0:
+        return &#34;&#34;
+    
+    if before[0] == &#34;#&#34;:
+        return &#39; &#39;.join(segment(before))
+    return before</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.standard_pipeline"><code class="name flex">
+<span>def <span class="ident">standard_pipeline</span></span>(<span>tokenizer)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def standard_pipeline(tokenizer):
+    _standard_pipeline = [
+        to_vec(remove_end_of_line, tokenizer),
+        to_vec(split_hashtag, tokenizer), 
+        to_vec(remove_informal_contractions, tokenizer), 
+        to_vec(remove_standard_contractions, tokenizer), 
+    ]
+    return _standard_pipeline</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.stemming"><code class="name flex">
+<span>def <span class="ident">stemming</span></span>(<span>before)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def stemming(before):
+    return ps.stem(before)</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.to_vec"><code class="name flex">
+<span>def <span class="ident">to_vec</span></span>(<span>lmt_wise_method, tokenizer)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_vec(lmt_wise_method, tokenizer):
+    return np.vectorize(lambda x: lmt_wise_method(x, tokenizer))</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.translate_emojis"><code class="name flex">
+<span>def <span class="ident">translate_emojis</span></span>(<span>before, tokenizer)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def translate_emojis(before, tokenizer):
+    if len(before) == 0:
+        return &#34;&#34;
+
+    # Do not substitute, if the vocab already contains the emojii
+    if len(tokenizer.tokenize(&#34; &#34; + before)) == 1:
+        return before
+
+    pos = re.match(positive_emojis, before)
+    neg = re.match(negative_emojis, before)
+
+    if pos is not None:
+        # Existing token in RoBERTa vocab
+        return &#34;:-)&#34;
+    elif neg is not None:
+        # Existing token in RoBERTa vocab
+        return &#34;:(&#34;
+    else:
+        return before</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.truncate_small_words"><code class="name flex">
+<span>def <span class="ident">truncate_small_words</span></span>(<span>before, minimum_size)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def truncate_small_words(before , minimum_size):
+    if len(before)&lt;minimum_size:
+        return &#34;&#34;
+    return before</code></pre>
+</details>
+</dd>
+<dt id="roberta.preprocessing_v6.words_to_tags"><code class="name flex">
+<span>def <span class="ident">words_to_tags</span></span>(<span>before, tokenizer)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def words_to_tags(before, tokenizer):
+    if before == &#34;&lt;url&gt;&#34;:
+        return &#34;[UNK]&#34;
+    elif before == &#34;xox&#34;:
+        return &#34;kiss&#34;
+    elif before == &#34;&lt;user&gt;&#34;:
+        return &#34;alice&#34;
+    return before</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="roberta" href="index.html">roberta</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="roberta.preprocessing_v6.detect_laugh" href="#roberta.preprocessing_v6.detect_laugh">detect_laugh</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.extended_pipeline" href="#roberta.preprocessing_v6.extended_pipeline">extended_pipeline</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.lemmatize" href="#roberta.preprocessing_v6.lemmatize">lemmatize</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.process_sentence" href="#roberta.preprocessing_v6.process_sentence">process_sentence</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.remove_digits" href="#roberta.preprocessing_v6.remove_digits">remove_digits</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.remove_end_of_line" href="#roberta.preprocessing_v6.remove_end_of_line">remove_end_of_line</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.remove_hashtag" href="#roberta.preprocessing_v6.remove_hashtag">remove_hashtag</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.remove_informal_contractions" href="#roberta.preprocessing_v6.remove_informal_contractions">remove_informal_contractions</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.remove_repeats" href="#roberta.preprocessing_v6.remove_repeats">remove_repeats</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.remove_standard_contractions" href="#roberta.preprocessing_v6.remove_standard_contractions">remove_standard_contractions</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.remove_stopwords" href="#roberta.preprocessing_v6.remove_stopwords">remove_stopwords</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.split_hashtag" href="#roberta.preprocessing_v6.split_hashtag">split_hashtag</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.standard_pipeline" href="#roberta.preprocessing_v6.standard_pipeline">standard_pipeline</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.stemming" href="#roberta.preprocessing_v6.stemming">stemming</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.to_vec" href="#roberta.preprocessing_v6.to_vec">to_vec</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.translate_emojis" href="#roberta.preprocessing_v6.translate_emojis">translate_emojis</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.truncate_small_words" href="#roberta.preprocessing_v6.truncate_small_words">truncate_small_words</a></code></li>
+<li><code><a title="roberta.preprocessing_v6.words_to_tags" href="#roberta.preprocessing_v6.words_to_tags">words_to_tags</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
