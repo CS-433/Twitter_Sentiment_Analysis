@@ -27,7 +27,7 @@ All the required libraries are listed in [TODO: Name of the file] and can be ins
 
 ## C. Models info
 
-We describe our pipelines in our report [TODO: Put copy of the report in this folder]
+We describe our pipelines in section III of our report.
 
 Below, we detail the hardware requirements of different parts of our code:
 
@@ -44,12 +44,12 @@ Below, we detail the hardware requirements of different parts of our code:
 
 We use the logits calculated by different _stage1_ models (TF-IDF + SVC, GloVe + LSTM, FastText, RoBERTa + Linear) to build the features vector fed to our _stage2_ classifier, which learns an optimal voting strategy.
 
-When executing the script `run.py`, the code downloads our precomputed logits of each _stage1_ model and uses the _stage2_ classifier to compute labels. For reproducibility purposes, however, the logits can be easily recalculated using our finetuned models (see section D).
+When executing the script `run.py`, the code downloads our precomputed logits (one file for each _stage1_ model) and inputs them to the _stage2_ classifier, which computes labels. For reproducibility purposes, however, the logits can also be easily recalculated using our finetuned models (see section E).
 
 ## E. `[MODEL]_itermediate.py`
 
-Each _stage1_ models implements, in its `[MODEL]_itermediate.py` file, two functions:
+Each _stage1_ models implements, in its `[MODEL]_itermediate.py` file, the following two functions:
 
- 1. `get_intermediate()` returns the precomputed logits.
+ 1. `get_intermediate()`, which returns the precomputed logits.
 
- 2. `generate_intermediate()` dowloads the finetuned model and uses it to calculate logits from scratch.
+ 2. `generate_intermediate()`, which dowloads the finetuned model and uses it to calculate logits from scratch.
