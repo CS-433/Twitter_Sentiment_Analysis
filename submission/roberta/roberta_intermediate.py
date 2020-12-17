@@ -6,6 +6,7 @@ import transformers
 from transformers import AutoTokenizer, RobertaForSequenceClassification
 import numpy as np
 import requests
+import wget
 
 # Contains preprocessing functions
 from roberta.preprocessing_v6 import *
@@ -79,3 +80,15 @@ def generate_intermediate(intermediate_filename="roberta_intermediate.csv"):
   # Free GPU memory
   del reloaded_model
   torch.cuda.empty_cache()
+
+def get_intermediate(intermediate_filename):
+    """ Download pre-generated intermediate results to gain time. 
+    
+    Parameters
+    -----------
+        intermediate_filename: str, optional
+            The path and name of the file with the intermediate data
+    """
+    
+    url = 'https://api.onedrive.com/v1.0/shares/u!aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBclREZ3U5ejdJT1ZqcU0tUGZ3MWhwZHhUVHkweGc_ZT1odVlq/root/content'
+    wget.download(url, intermediate_filename)

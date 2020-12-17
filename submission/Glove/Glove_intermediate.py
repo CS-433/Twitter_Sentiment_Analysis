@@ -1,11 +1,16 @@
 import wget
 root = 'data/'
 
-
-#Since we wasn't able to save the LSTM model, submission file is downloaded directly 
-def generate_intermediate(intermediate_filename= "glove_intermediate.csv"):
-     
+# The LSTM could not be saved. Please generate intermediate results directly in training. 
+ 
+def get_intermediate(intermediate_filename):
+    """ Download pre-generated intermediate results to gain time. 
     
-    submission_url = 'https://api.onedrive.com/v1.0/shares/u!aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBclREZ3U5ejdJT1ZqcU02NlRkVzNJMnVvbkRRUHc_ZT00OUVm/root/content'
+    Parameters
+    -----------
+        intermediate_filename: str, optional
+            The path and name of the file with the intermediate data
+    """
     
-    wget.download(submission_url, intermediate_filename)
+    url = 'https://api.onedrive.com/v1.0/shares/u!aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBclREZ3U5ejdJT1ZqcU1feVFjSHhEMEdaYzBpUGc_ZT1xOXpM/root/content'
+    wget.download(url, intermediate_filename)
