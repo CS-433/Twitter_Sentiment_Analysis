@@ -8,9 +8,9 @@ import numpy as np
 import requests
 
 # Contains preprocessing functions
-from preprocessing_v6 import *
+from roberta.preprocessing_v6 import *
 # Contains all the functions related to the model
-from roberta_model import *
+from roberta.roberta_model import *
 
 def download_resource(local_name, url):
   resp = requests.get(url, allow_redirects=True)
