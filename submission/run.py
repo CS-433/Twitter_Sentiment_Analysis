@@ -7,6 +7,13 @@ import os
 
 root = 'data/'
 os.makedirs(root, exist_ok=True)
+step = 1
+
+
+print("Step {:d}.\tCalling tfidf".format(step))
+tfidf_filename = root + 'tfidf_intermediate.csv'
+gen_tfidf(tfidf_filename)
+step += 1
 
 
 print("Step {:d}.\tLoading GloVe".format(step))
@@ -15,24 +22,17 @@ glove_filename = root + 'glove_intermediate.csv'
 wget.download(glove_predictions_url, glove_filename)
 step += 1
 
-
-step = 1
-print("Step {:d}.\tCalling fastText".format(step))
-fasttext_filename = root + 'fasttext_intermediate.csv'
-gen_fasttext(fasttext_filename)
-step += 1
-
-print("Step {:d}.\tCalling tfidf".format(step))
-tfidf_filename = root + 'tfidf_intermediate.csv'
-gen_tfidf(tfidf_filename)
-step += 1
-
 print("Step {:d}.\tCalling RoBERTa".format(step))
 roberta_filename = root + 'roberta_intermediate.csv'
 gen_roberta(roberta_filename)
 step += 1
 
-print("Step {:d}.\tLoading intermediate results".format(step))
+print("Step {:d}.\tCalling fastText".format(step))
+fasttext_filename = root + 'fasttext_intermediate.csv'
+gen_fasttext(fasttext_filename)
+step += 1
+
+print("Step {:d}.\tLoading computed intermediate results".format(step))
 scores = mod.load_all_intermediate(fasttext_filename, tfidf_filename, glove_filename, roberta_filename)
 step += 1
 
