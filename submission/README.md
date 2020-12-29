@@ -23,7 +23,7 @@ Each of the above folders, contain the following files (assuming the model name 
 
 ## B. Dependencies
 
-All the required libraries are listed in `env.yml` and can be installed with the command `conda env create -f env.yml`
+All the required libraries are listed in `env.yml` and can be installed with the command `conda env create -f env.yml`. This file **precisely reflects** the environment used in our tests and is thus only compatible with _Windows 10_ (since it lists OS-dependent libraries and builds). To install the minimal set of libraries required to run our code on different platforms, use `env_portable.yml` instead (`conda env create -f env_portable.yml`).
 
 ## C. Models info
 
